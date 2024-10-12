@@ -1,0 +1,139 @@
+|-- .env
+|-- .eslintrc.js
+|-- .gitignore
+|-- .prettierrc
+|-- db-first-command.txt
+|-- LICENSE
+|-- nest-cli.json
+|-- package-lock.json
+|-- package.json
+|-- README.md
+|-- src
+    |-- app.controller.spec.ts
+    |-- app.controller.ts
+    |-- app.module.ts
+    |-- app.service.ts
+    |-- common
+        |-- auto-mapper
+            |-- auto-mapper.module.ts
+            |-- auto-mapper.service.ts
+            |-- mapping-config.interface.ts
+        |-- decorators
+            |-- roles.decorator.ts
+        |-- filters
+        |-- guards
+            |-- facebook-auth.guard.ts
+            |-- google-auth.guard.ts
+            |-- jwt-auth.guard.ts
+            |-- local-auth.guard.ts
+            |-- roles.guard.ts
+        |-- interceptors
+        |-- pipes
+    |-- config
+        |-- app.config.ts
+        |-- aws-secrets.service.ts
+        |-- config.module.ts
+        |-- database.config.ts
+        |-- firebase.config.ts
+        |-- mapping-config.module.ts
+        |-- mapping-config.ts
+        |-- oauth.config.ts
+        |-- sqs.config.ts
+    |-- database
+        |-- database.module.ts
+        |-- entities
+            |-- BrandPermissions.ts
+            |-- CategoryDetails.ts
+            |-- CategorySortOrder.ts
+            |-- DaysAvailability.ts
+            |-- DeliverySegment.ts
+            |-- MobileInfo.ts
+            |-- OptionValuePricing.ts
+            |-- OptionValuePricingDetail.ts
+            |-- OrderMode.ts
+            |-- Product.ts
+            |-- ProductOption.ts
+            |-- ProductOptionValue.ts
+            |-- ProfileCorporate.ts
+            |-- ProfileCustomer.ts
+            |-- ServiceChannel.ts
+            |-- User.ts
+            |-- UserAuthLog.ts
+        |-- ormconfig.json
+        |-- repositories
+            |-- product.repository.ts
+            |-- user.repository.ts
+        |-- repository.providers.ts
+        |-- tsconfig.json
+    |-- integrations
+        |-- firebase
+            |-- firebase.module.ts
+            |-- firebase.service.spec.ts
+            |-- firebase.service.ts
+            |-- firebase.strategy.ts
+        |-- onesignal
+            |-- onesignal.module.ts
+            |-- onesignal.service.spec.ts
+            |-- onesignal.service.ts
+            |-- onesignal.strategy.ts
+    |-- main.ts
+    |-- modules
+        |-- auth
+            |-- auth.controller.spec.ts
+            |-- auth.controller.ts
+            |-- auth.module.ts
+            |-- auth.service.spec.ts
+            |-- auth.service.ts
+            |-- dto
+                |-- login.dto.ts
+                |-- register.dto.ts
+            |-- strategies
+                |-- facebook.strategy.ts
+                |-- google.strategy.ts
+                |-- jwt.strategy.ts
+        |-- order
+            |-- dto
+                |-- create-order.dto.ts
+                |-- update-order.dto.ts
+            |-- order.controller.spec.ts
+            |-- order.controller.ts
+            |-- order.module.ts
+            |-- order.service.spec.ts
+            |-- order.service.ts
+        |-- product
+            |-- dto
+                |-- create-product.dto.ts
+                |-- update-product.dto.ts
+            |-- product.controller.spec.ts
+            |-- product.controller.ts
+            |-- product.module.ts
+            |-- product.service.spec.ts
+            |-- product.service.ts
+        |-- user
+            |-- dto
+                |-- create-profile-corporate.dto.ts
+                |-- create-profile-customer.dto.ts
+                |-- create-user.dto.ts
+                |-- update-user.dto.ts
+            |-- service
+                |-- profile-corporate.service.spec.ts
+                |-- profile-corporate.service.ts
+                |-- profile-customer.service.spec.ts
+                |-- profile-customer.service.ts
+                |-- user.service.spec.ts
+                |-- user.service.ts
+            |-- user.controller.spec.ts
+            |-- user.controller.ts
+            |-- user.module.ts
+    |-- shared
+        |-- constants
+            |-- auth-method.constant.ts
+            |-- brand.constant.ts
+            |-- corporate-type.constant.ts
+            |-- user-role.constant.ts
+        |-- utils
+|-- test
+    |-- app.e2e-spec.ts
+    |-- jest-e2e.json
+|-- tsconfig.build.json
+|-- tsconfig.json
