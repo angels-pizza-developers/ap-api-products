@@ -1,35 +1,83 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Angel's Pizza API - Products
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## ap-api-products
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
 
-## Description
+This is a [NestJS](https://nestjs.com/) project that uses PostgreSQL as the database. The project follows the code-first approach with TypeORM to automatically synchronize the database schema from the entities defined in the code. 
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Prerequisites
+
+Before you start, ensure you have the following installed:
+
+- **Node.js** (version 18.x or above)
+- **PostgreSQL** (version 15.x or above)
+- **Docker** (optional, if you are using Docker for your database)
+
+## Getting Started
+
+Follow these instructions to set up the project on your local machine.
+
+
+Clone the project from the repository:
+
+```bash
+git clone https://github.com/angels-pizza-developers/ap-api-products.git
+cd ap-api-products
+```
 
 ## Project setup
 
 ```bash
-$ npm install
+npm install
+# or
+yarn install
+```
+
+## Configure Environment Variables
+
+Create a .env file in the root directory based on the .env.example file. Update it with your local environment settings.
+
+Example .env file:
+
+```bash
+# App Config
+PORT=3000
+API_PREFIX=api/v1
+BASE_URL=http://localhost
+
+# AUTH
+AUTH_TOKEN_EXPIRE=1hr
+AUTH_ALGORITHM=RS256
+
+# JWT secret key
+JWT_SECRET=yourJWTSecret
+
+#Facebook Auth
+FACEBOOK_CLIENT_ID=yourFacebookClientId
+FACEBOOK_CLIENT_SECRET=yourFacebookSecret
+FACEBOOK_CALLBACK_URL=http://localhost:3000/auth/facebook/callback
+
+# Google OAuth credentials
+GOOGLE_CLIENT_ID=yourGoogleClientId
+GOOGLE_CLIENT_SECRET=yourGoogleSecret
+GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+
+# Database Config
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=yourpassword
+DB_DATABASE=yourdbname
+DB_SYNCHRONIZE=true  # Set to true to enable automatic schema sync (development only)
+DB_LOGGING=true
+SSL=false
+```
+
+## Set Up the PostgreSQL Database
+
+```bash
+psql -U postgres -c "CREATE DATABASE yourdbname;"
 ```
 
 ## Compile and run the project
@@ -70,16 +118,6 @@ Check out a few resources that may come in handy when working with NestJS:
 - To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
 - Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
@@ -89,85 +127,28 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Project File Structure
 
 ```bash
-
-ap-api-products
-├── src
-│   ├── common
-│   │   ├── decorators
-│   │   ├── filters
-│   │   ├── guards
-│   │   ├── interceptors
-│   │   ├── pipes
-│   │   └── constants
-│   │
-│   ├── config
-│   │   ├── app.config.ts
-│   │   ├── database.config.ts
-│   │   ├── firebase.config.ts
-│   │   ├── sqs.config.ts
-│   │   ├── aws-secrets.service.ts
-│   │   └── config.module.ts
-│   │
-│   ├── integrations
-│   │   ├── firebase
-│   │   │   ├── firebase.module.ts
-│   │   │   ├── firebase.service.ts
-│   │   │   └── firebase.strategy.ts
-│   │   ├── onesignal
-│   │   │   ├── onesignal.module.ts
-│   │   │   ├── onesignal.service.ts
-│   │   │   └── onesignal.strategy.ts
-│   │   ├── aws-sqs
-│   │   │   ├── sqs.module.ts
-│   │   │   ├── sqs.service.ts
-│   │   │   └── sqs.consumer.ts
-│   │   └── websockets
-│   │       ├── ws.gateway.ts
-│   │       ├── ws.module.ts
-│   │       └── ws.service.ts
-│   ├── modules
-│   │   ├── auth
-│   │   │   ├── auth.controller.ts
-│   │   │   ├── auth.service.ts
-│   │   │   ├── auth.module.ts
-│   │   │   ├── dtos
-│   │   │   └── strategies
-│   │   ├── product
-│   │   │   ├── user.controller.ts
-│   │   │   ├── user.service.ts
-│   │   │   ├── user.module.ts
-│   │   │   ├── dtos
-│   │   └── order
-│   │       ├── order.controller.ts
-│   │       ├── order.service.ts
-│   │       ├── order.module.ts
-│   │       └── dtos
-│   │
-│   ├── database
-│   │   ├── entities
-│   │   │   └── user.entity.ts
-│   │   ├── repositories
-│   │   │   └── user.repository.ts
-│   │   │   └── product.repository.ts
-│   │   ├── database.module.ts
-│   │   └── database.providers.ts
-│   │
-│   ├── shared
-│   │   ├── database
-│   │   └── utils
-│   │
-│   ├── app.controller.ts
-│   ├── app.module.ts
-│   ├── app.service.ts
-│   └── main.ts
-│
-├── test
-│   ├── e2e
-│   └── unit
-│
-├── .env
-├── .env.example
-├── .eslintrc.js
-├── .prettierrc
-├── package.json
-└── tsconfig.json
+root 
+|-- src
+    |-- common
+        |-- auto-mapper
+        |-- decorators
+        |-- filters
+        |-- guards
+        |-- interceptors
+        |-- pipes
+    |-- config
+    |-- database
+        |-- entities
+    |-- integrations
+        |-- firebase
+        |-- onesignal
+    |-- main.ts
+    |-- modules 
+        |-- auth
+        |-- order
+        |-- product
+        |-- user
+    |-- shared
+        |-- constants
+        |-- utils
+|-- test
