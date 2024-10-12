@@ -1,0 +1,4 @@
+export const USER_ROLE = {
+  CORPORATE: 'CORPORATE',
+  CUSTOMER: 'CUSTOMER',
+};

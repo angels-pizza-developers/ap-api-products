@@ -1,0 +1,5 @@
+export const CORPORATE_TYPE = {
+  BRANCH: 'BRANCH',
+  RIDER: 'RIDER',
+  OPERATIONS: 'OPERATIONS',
+};
