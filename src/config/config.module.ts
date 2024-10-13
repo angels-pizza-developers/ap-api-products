@@ -36,6 +36,7 @@ import oauthConfig from './oauth.config';
           // Load from local .env file for development
           const envPath = `.env.${environment}`;
           dotenv.config({ path: fs.existsSync(envPath) ? envPath : '.env' });
+          console.log(process.env);
           return process.env;
         }
       },
