@@ -20,10 +20,12 @@ export class AwsSecretsService {
         }),
       );
       if (data.SecretString) {
+        console.log(JSON.parse(data.SecretString));
         return JSON.parse(data.SecretString); // Parse JSON formatted secret
+      } else {
+        this.logger.error(`Secret ${secretName} is not in a valid format.`);
+        throw new Error('Invalid secret format');
       }
-      this.logger.error(`Secret ${secretName} is not in a valid format.`);
-      throw new Error('Invalid secret format');
     } catch (error) {
       this.logger.error(`Failed to load secret ${secretName}:`, error.message);
       throw error;
