@@ -9,7 +9,7 @@ export class AwsSecretsService {
 
   constructor() {}
 
-  async getSecret(secretName: string): Promise<Record<string, any>> {
+  async getSecret(secretName: string): Promise<any> {
     try {
       const client = new SecretsManagerClient({
         region: 'ap-southeast-1',
@@ -20,8 +20,8 @@ export class AwsSecretsService {
         }),
       );
       if (data.SecretString) {
-        console.log(JSON.parse(data.SecretString));
-        return JSON.parse(data.SecretString); // Parse JSON formatted secret
+        console.log(data.SecretString);
+        return data.SecretString; // Parse JSON formatted secret
       } else {
         this.logger.error(`Secret ${secretName} is not in a valid format.`);
         throw new Error('Invalid secret format');
