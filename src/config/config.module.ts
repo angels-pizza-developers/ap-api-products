@@ -31,14 +31,18 @@ import oauthConfig from './oauth.config';
           const secrets = await awsSecretsService.getSecret(
             process.env.AWS_SECRETS_NAME,
           );
-          return { ...process.env, ...secrets };
+
+          // Merge AWS Secrets into process.env
+          for (const [key, value] of Object.entries(secrets)) {
+            process.env[key] = value ?? (value?.toString() as any);
+          }
         } else {
           // Load from local .env file for development
           const envPath = `.env.${environment}`;
           dotenv.config({ path: fs.existsSync(envPath) ? envPath : '.env' });
-          console.log(process.env);
-          return process.env;
         }
+
+        return process.env;
       },
       inject: [AwsSecretsService],
     },
