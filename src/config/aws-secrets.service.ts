@@ -1,22 +1,24 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { SecretsManager } from 'aws-sdk';
-
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from '@aws-sdk/client-secrets-manager';
 @Injectable()
 export class AwsSecretsService {
-  private readonly secretsManager: SecretsManager;
   private readonly logger = new Logger(AwsSecretsService.name);
 
-  constructor() {
-    this.secretsManager = new SecretsManager({
-      region: process.env.AWS_REGION || 'us-east-1',
-    });
-  }
+  constructor() {}
 
   async getSecret(secretName: string): Promise<Record<string, any>> {
     try {
-      const data = await this.secretsManager
-        .getSecretValue({ SecretId: secretName })
-        .promise();
+      const client = new SecretsManagerClient({
+        region: 'ap-southeast-1',
+      });
+      const data = await client.send(
+        new GetSecretValueCommand({
+          SecretId: secretName.toString().trim(),
+        }),
+      );
       if (data.SecretString) {
         return JSON.parse(data.SecretString); // Parse JSON formatted secret
       }

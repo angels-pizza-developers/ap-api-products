@@ -120,7 +120,7 @@ Check out a few resources that may come in handy when working with NestJS:
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 
 
