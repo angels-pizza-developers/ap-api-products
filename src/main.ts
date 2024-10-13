@@ -11,6 +11,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1', {
     exclude: ['auth/google/callback', 'auth/facebook/callback'],
   });
+  console.log('checking process.env.NODE_ENV', process.env.NODE_ENV);
+  console.log(
+    'checking process.env.AWS_SECRETS_NAME',
+    process.env.AWS_SECRETS_NAME,
+  );
   // the next two lines did the trick
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));

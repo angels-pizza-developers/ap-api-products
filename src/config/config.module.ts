@@ -23,6 +23,7 @@ import oauthConfig from './oauth.config';
       provide: 'CONFIG',
       useFactory: async (awsSecretsService: AwsSecretsService) => {
         const environment = process.env.NODE_ENV || 'development';
+        console.log(`this is ${environment} environment`);
 
         // Check if we're in production or not
         if (environment === 'production') {
