@@ -5,7 +5,7 @@ import {
 
 export const fetchSecrets = async (secretName: string) => {
   const client = new SecretsManagerClient({
-    region: "ap-southeast-2",
+    region: "ap-southeast-1",
   });
   try {
     const response = await client.send(
