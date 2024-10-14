@@ -55,7 +55,8 @@ import { UserAuthLog } from './entities/UserAuthLog';
         extra:
           configService.get<string>('SSL')?.toLowerCase() === 'true'
             ? { ssl: { require: true, rejectUnauthorized: false } }
-            : {},}),
+            : {},
+      }),
     }),
     TypeOrmModule.forFeature([]), // Register your entities for repositories
   ],

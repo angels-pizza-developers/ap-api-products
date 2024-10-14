@@ -64,6 +64,7 @@
             |-- user.repository.ts
         |-- repository.providers.ts
         |-- tsconfig.json
+        |-- typeorm.service.ts
     |-- integrations
         |-- firebase
             |-- firebase.module.ts

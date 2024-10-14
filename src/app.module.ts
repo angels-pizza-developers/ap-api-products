@@ -10,8 +10,10 @@ import { OrderModule } from './modules/order/order.module'; // Order module
 import { FirebaseModule } from './integrations/firebase/firebase.module';
 import { OnesignalModule } from './integrations/onesignal/onesignal.module';
 import { UserModule } from './modules/user/user.module';
-import { ConfigAppModule } from './config/config.module';
+// import { ConfigAppModule } from './config/config.module';
 import { createConfig } from './config/app.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfigService } from './database/typeorm.service';
 const config = createConfig();
 @Module({
   imports: [
@@ -19,8 +21,9 @@ const config = createConfig();
       isGlobal: true, // Loads .env and is accessible globally
       ...config,
     }),
-    ConfigAppModule, // Configuration module
-    DatabaseModule, // Database module with TypeORM support
+    // ConfigAppModule, // Configuration module
+    // DatabaseModule, // Database module with TypeORM support
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     FirebaseModule, // Firebase integration
     OnesignalModule,
     // SqsModule,        // AWS SQS integration
