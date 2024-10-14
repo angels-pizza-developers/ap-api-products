@@ -26,7 +26,7 @@ import { PassportModule } from '@nestjs/passport';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('app.jwtSecret'),  // Fetch secret from environment variable
+        secret: configService.get<string>('JWT_SECRET'),  // Fetch secret from environment variable
         signOptions: { expiresIn: '60m' },
       }),
     }),

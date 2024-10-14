@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ConfigAppModule } from './config/config.module'; // Importing the custom config module
 import { DatabaseModule } from './database/database.module'; // Database module for handling entities and repositories
 // import { FirebaseModule } from './integrations/firebase/firebase.module'; // Firebase integration
 // import { SqsModule } from './integrations/aws-sqs/sqs.module'; // AWS SQS integration
@@ -11,11 +10,14 @@ import { OrderModule } from './modules/order/order.module'; // Order module
 import { FirebaseModule } from './integrations/firebase/firebase.module';
 import { OnesignalModule } from './integrations/onesignal/onesignal.module';
 import { UserModule } from './modules/user/user.module';
-
+import { ConfigAppModule } from './config/config.module';
+import { createConfig } from './config/app.config';
+const config = createConfig();
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Loads .env and is accessible globally
+      ...config,
     }),
     ConfigAppModule, // Configuration module
     DatabaseModule, // Database module with TypeORM support

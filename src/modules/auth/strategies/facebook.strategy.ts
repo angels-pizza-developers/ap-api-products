@@ -15,9 +15,9 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     private configService: ConfigService,
   ) {
     super({
-      clientID: configService.get<string>('oauth.facebook.clientID'),
-      clientSecret: configService.get<string>('oauth.facebook.clientSecret'),
-      callbackURL: configService.get<string>('oauth.facebook.callbackURL'),
+      clientID: configService.get<string>('FACEBOOK_CLIENT_ID'),
+      clientSecret: configService.get<string>('FACEBOOK_CLIENT_SECRET'),
+      callbackURL: configService.get<string>('FACEBOOK_CALLBACK_URL'),
       profileFields: ['id', 'emails', 'name', 'picture'], // Get these fields from Facebook
     });
   }

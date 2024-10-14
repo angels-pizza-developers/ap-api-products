@@ -19,8 +19,9 @@ async function bootstrap() {
   // the next two lines did the trick
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
   const config: ConfigService = app.get(ConfigService);
-  const port: number = config.get<number>('app.port');
+  const port: number = config.get<number>('PORT');
   const options = new DocumentBuilder()
     .setTitle('ap-api-products')
     .setDescription('A documentation for ap-api-products')
@@ -41,7 +42,7 @@ async function bootstrap() {
   await app.listen(port, () => {
     console.log(
       '[WEB]',
-      `${config.get<string>('app.baseUrl')}:${config.get<string>('app.port')}` +
+      `${config.get<string>('BASE_URL')}:${config.get<string>('PORT')}` +
         '/swagger',
     );
   });

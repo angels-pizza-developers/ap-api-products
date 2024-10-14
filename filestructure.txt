@@ -1,3 +1,5 @@
+|-- .anima
+    |-- .gitignore
 |-- .env
 |-- .eslintrc.js
 |-- .gitignore
@@ -31,14 +33,11 @@
         |-- pipes
     |-- config
         |-- app.config.ts
-        |-- aws-secrets.service.ts
         |-- config.module.ts
-        |-- database.config.ts
-        |-- firebase.config.ts
+        |-- fetch-screts.ts
         |-- mapping-config.module.ts
         |-- mapping-config.ts
-        |-- oauth.config.ts
-        |-- sqs.config.ts
+        |-- secret-manager.config.ts
     |-- database
         |-- database.module.ts
         |-- entities

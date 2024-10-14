@@ -25,14 +25,13 @@ import { UserAuthLog } from './entities/UserAuthLog';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        console.log(configService.get<string>('database'));
-        return {
+        const config = {
           type: 'postgres',
-          host: configService.get<string>('database.host'),
-          port: parseInt(configService.get<string>('database.port'), 5433),
-          username: configService.get<string>('database.username'),
-          password: configService.get<string>('database.password'),
-          database: configService.get<string>('database.database'),
+          host: configService.get<string>('DB_HOST'),
+          port: parseInt(configService.get<string>('DB_PORT'), 5433),
+          username: configService.get<string>('DB_USERNAME'),
+          password: configService.get<string>('DB_PASSWORD'),
+          database: configService.get<string>('DB_DATABASE'),
           entities: [
             CategoryDetails,
             CategorySortOrder,
@@ -52,15 +51,14 @@ import { UserAuthLog } from './entities/UserAuthLog';
             BrandPermissions,
             MobileInfo,
           ], // Add your entities here
-          synchronize:
-            configService.get<string>('database.synchronize') === 'true', // Don't use 'true' in production
-          ssl:
-            configService.get<string>('database.ssl')?.toLowerCase() === 'true', // SSL support
+          synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true', // Don't use 'true' in production
+          ssl: configService.get<string>('SSL')?.toLowerCase() === 'true', // SSL support
           extra:
-            configService.get<string>('database.ssl')?.toLowerCase() === 'true'
+            configService.get<string>('SSL')?.toLowerCase() === 'true'
               ? { ssl: { require: true, rejectUnauthorized: false } }
               : {},
         };
+        return config as any;
       },
     }),
     TypeOrmModule.forFeature([]), // Register your entities for repositories
