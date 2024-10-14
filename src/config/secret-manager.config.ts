@@ -7,5 +7,6 @@ export default async () => {
   console.log("secretName", process.env.AWS_SECRETS_NAME)
 
   const secrets = await fetchSecrets(secretName.toString().trim());
+  console.log()
   return secrets;
 };

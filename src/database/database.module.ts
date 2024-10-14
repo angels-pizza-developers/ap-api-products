@@ -24,42 +24,38 @@ import { UserAuthLog } from './entities/UserAuthLog';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const config = {
-          type: 'postgres',
-          host: configService.get<string>('DB_HOST'),
-          port: parseInt(configService.get<string>('DB_PORT'), 5433),
-          username: configService.get<string>('DB_USERNAME'),
-          password: configService.get<string>('DB_PASSWORD'),
-          database: configService.get<string>('DB_DATABASE'),
-          entities: [
-            CategoryDetails,
-            CategorySortOrder,
-            DaysAvailability,
-            DeliverySegment,
-            OptionValuePricing,
-            OptionValuePricingDetail,
-            OrderMode,
-            Product,
-            ProductOption,
-            ProductOptionValue,
-            ServiceChannel,
-            User,
-            ProfileCustomer,
-            ProfileCorporate,
-            UserAuthLog,
-            BrandPermissions,
-            MobileInfo,
-          ], // Add your entities here
-          synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true', // Don't use 'true' in production
-          ssl: configService.get<string>('SSL')?.toLowerCase() === 'true', // SSL support
-          extra:
-            configService.get<string>('SSL')?.toLowerCase() === 'true'
-              ? { ssl: { require: true, rejectUnauthorized: false } }
-              : {},
-        };
-        return config as any;
-      },
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: parseInt(configService.get<string>('DB_PORT'), 5433),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_DATABASE'),
+        entities: [
+          CategoryDetails,
+          CategorySortOrder,
+          DaysAvailability,
+          DeliverySegment,
+          OptionValuePricing,
+          OptionValuePricingDetail,
+          OrderMode,
+          Product,
+          ProductOption,
+          ProductOptionValue,
+          ServiceChannel,
+          User,
+          ProfileCustomer,
+          ProfileCorporate,
+          UserAuthLog,
+          BrandPermissions,
+          MobileInfo,
+        ], // Add your entities here
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true', // Don't use 'true' in production
+        ssl: configService.get<string>('SSL')?.toLowerCase() === 'true', // SSL support
+        extra:
+          configService.get<string>('SSL')?.toLowerCase() === 'true'
+            ? { ssl: { require: true, rejectUnauthorized: false } }
+            : {},}),
     }),
     TypeOrmModule.forFeature([]), // Register your entities for repositories
   ],
