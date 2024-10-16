@@ -5,8 +5,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ProfileCorporate } from "./ProfileCorporate";
-import { ProfileCustomer } from "./ProfileCustomer";
+import { BranchUser } from "./BranchUser";
+import { CustomerUser } from "./CustomerUser";
+import { DriverUser } from "./DriverUser";
+import { UserAccessType } from "./UserAccessType";
+import { UserAuth } from "./UserAuth";
 
 @Index("User_pkey", ["userId"], { unique: true })
 @Entity("User", { schema: "dbo" })
@@ -14,11 +17,14 @@ export class User {
   @PrimaryGeneratedColumn({ type: "bigint", name: "UserId" })
   userId: string;
 
-  @Column("character varying", { name: "Username" })
-  username: string;
+  @Column("enum", {
+    name: "Role",
+    enum: ["CUSTOMER", "CORPORATE", "BRANCH", "DRIVER"],
+  })
+  role: "CUSTOMER" | "CORPORATE" | "BRANCH" | "DRIVER";
 
-  @Column("timestamp with time zone", { name: "LastLogin", nullable: true })
-  lastLogin: Date | null;
+  @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
+  brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
 
   @Column("timestamp with time zone", {
     name: "CreatedAt",
@@ -29,84 +35,21 @@ export class User {
   @Column("timestamp with time zone", { name: "UpdatedAt", nullable: true })
   updatedAt: Date | null;
 
-  @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
-  brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
+  @Column("boolean", { name: "Active", default: () => "true" })
+  active: boolean;
 
-  @Column("enum", {
-    name: "Status",
-    enum: ["ENABLED", "DISABLED"],
-    default: () => "'ENABLED'.user_status_enum",
-  })
-  status: "ENABLED" | "DISABLED";
+  @OneToMany(() => BranchUser, (branchUser) => branchUser.user)
+  branchUsers: BranchUser[];
 
-  @Column("enum", {
-    name: "AuthMethod",
-    enum: [
-      "PASSWORD",
-      "PIN",
-      "PASSWORDLESS",
-      "OTP",
-      "GOOGLE",
-      "FACEBOOK",
-      "APPLE",
-      "GITHUB",
-      "LINKEDIN",
-      "SSO",
-      "SAML",
-      "OAUTH2",
-      "OPENID_CONNECT",
-      "AZURE_AD",
-      "OKTA",
-      "FINGERPRINT",
-      "FACE_RECOGNITION",
-      "VOICE_RECOGNITION",
-      "2FA_SMS",
-      "2FA_EMAIL",
-      "2FA_AUTH_APP",
-      "2FA_HARDWARE_TOKEN",
-      "MAGIC_LINK",
-      "TOKEN",
-      "QR_CODE",
-      "GUEST",
-    ],
-  })
-  authMethod:
-    | "PASSWORD"
-    | "PIN"
-    | "PASSWORDLESS"
-    | "OTP"
-    | "GOOGLE"
-    | "FACEBOOK"
-    | "APPLE"
-    | "GITHUB"
-    | "LINKEDIN"
-    | "SSO"
-    | "SAML"
-    | "OAUTH2"
-    | "OPENID_CONNECT"
-    | "AZURE_AD"
-    | "OKTA"
-    | "FINGERPRINT"
-    | "FACE_RECOGNITION"
-    | "VOICE_RECOGNITION"
-    | "2FA_SMS"
-    | "2FA_EMAIL"
-    | "2FA_AUTH_APP"
-    | "2FA_HARDWARE_TOKEN"
-    | "MAGIC_LINK"
-    | "TOKEN"
-    | "QR_CODE"
-    | "GUEST";
+  @OneToMany(() => CustomerUser, (customerUser) => customerUser.user)
+  customerUsers: CustomerUser[];
 
-  @Column("enum", { name: "Role", enum: ["CUSTOMER", "CORPORATE"] })
-  role: "CUSTOMER" | "CORPORATE";
+  @OneToMany(() => DriverUser, (driverUser) => driverUser.user)
+  driverUsers: DriverUser[];
 
-  @OneToMany(
-    () => ProfileCorporate,
-    (profileCorporate) => profileCorporate.user
-  )
-  profileCorporates: ProfileCorporate[];
+  @OneToMany(() => UserAccessType, (userAccessType) => userAccessType.user)
+  userAccessTypes: UserAccessType[];
 
-  @OneToMany(() => ProfileCustomer, (profileCustomer) => profileCustomer.user)
-  profileCustomers: ProfileCustomer[];
+  @OneToMany(() => UserAuth, (userAuth) => userAuth.user)
+  userAuths: UserAuth[];
 }

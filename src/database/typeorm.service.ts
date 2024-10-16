@@ -1,22 +1,26 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { BrandPermissions } from './entities/BrandPermissions';
-import { CategoryDetails } from './entities/CategoryDetails';
-import { CategorySortOrder } from './entities/CategorySortOrder';
-import { DaysAvailability } from './entities/DaysAvailability';
-import { DeliverySegment } from './entities/DeliverySegment';
-import { MobileInfo } from './entities/MobileInfo';
-import { OptionValuePricing } from './entities/OptionValuePricing';
-import { OptionValuePricingDetail } from './entities/OptionValuePricingDetail';
-import { OrderMode } from './entities/OrderMode';
 import { Product } from './entities/Product';
 import { ProductOption } from './entities/ProductOption';
+import { ProductOptionType } from './entities/ProductOptionType';
 import { ProductOptionValue } from './entities/ProductOptionValue';
-import { ProfileCorporate } from './entities/ProfileCorporate';
-import { ProfileCustomer } from './entities/ProfileCustomer';
-import { ServiceChannel } from './entities/ServiceChannel';
+import { ProductBranch } from './entities/ProductBranch';
+import { AccessPermission } from './entities/AccessPermission';
+import { AccessType } from './entities/AccessType';
+import { UserAccessType } from './entities/UserAccessType';
+import { Permission } from './entities/Permission';
 import { User } from './entities/User';
+import { UserAuth } from './entities/UserAuth';
+import { CustomerUser } from './entities/CustomerUser';
+import { CorporateUser } from './entities/CorporateUser';
+import { BranchUser } from './entities/BranchUser';
+import { DriverUser } from './entities/DriverUser';
+import { Branch } from './entities/Branch';
+import { PaymentMethod } from './entities/PaymentMethod';
+import { Guest } from './entities/Guest';
+import { ProductCategory } from './entities/ProductCategory';
+import { Category } from './entities/Category';
 import { UserAuthLog } from './entities/UserAuthLog';
 
 @Injectable()
@@ -35,23 +39,27 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       username: this.config.get<string>('DB_USERNAME'),
       password: this.config.get<string>('DB_PASSWORD'),
       entities: [
-        CategoryDetails,
-        CategorySortOrder,
-        DaysAvailability,
-        DeliverySegment,
-        OptionValuePricing,
-        OptionValuePricingDetail,
-        OrderMode,
         Product,
         ProductOption,
+        ProductOptionType,
         ProductOptionValue,
-        ServiceChannel,
+        ProductBranch,
+        Category,
+        ProductCategory,
+        Permission,
+        AccessPermission,
+        AccessType,
+        UserAccessType,
+        Guest,
         User,
-        ProfileCustomer,
-        ProfileCorporate,
+        UserAuth,
         UserAuthLog,
-        BrandPermissions,
-        MobileInfo,
+        CustomerUser,
+        CorporateUser,
+        BranchUser,
+        DriverUser,
+        Branch,
+        PaymentMethod
       ],
       synchronize: synchronize.toLocaleLowerCase().includes('true'), // never use TRUE in production!
       ssl: ssl.toLocaleLowerCase().includes('true'),

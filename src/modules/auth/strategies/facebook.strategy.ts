@@ -2,12 +2,11 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-facebook';
 import { Injectable } from '@nestjs/common';
-import { AuthService } from '../auth.service';
-import { RegisterCustomerDto } from '../dto/register.dto';
 import { ConfigService } from '@nestjs/config';
 import { AUTH_METHOD } from 'src/shared/constants/auth-method.constant';
 import { BRAND_TYPE } from 'src/shared/constants/brand.constant';
 import { USER_ROLE } from 'src/shared/constants/user-role.constant';
+import { AuthService } from '../service/auth.service';
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
   constructor(
@@ -28,20 +27,21 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    const { id, name } = profile;
-
-    let user = await this.authService.findByFacebookUser(id);
-    if (!user) {
-      // Register new user if not found
-      const customer = new RegisterCustomerDto();
-      customer.firstName = name.givenName;
-      customer.lastName = name.familyName;
-      customer.username = id;
-      customer.brand = BRAND_TYPE.ANGELS_PIZZA;
-      customer.authMethod = AUTH_METHOD.FACEBOOK as any;
-      customer.role = USER_ROLE.CUSTOMER as any;
-      user = await this.authService.registerCustomer(customer);
+    const { id } = profile;
+    const userAuth = await this.authService.validateUserAuth(
+      BRAND_TYPE.ANGELS_PIZZA as any,
+      id,
+      AUTH_METHOD.FACEBOOK as any,
+    );
+    if (!userAuth) {
+      return done(null, false, false);
     }
-    done(null, user);
+    done(null, {
+      userId: userAuth.user.userId,
+      providerUserId: userAuth.providerUserId,
+      authMethod: AUTH_METHOD.FACEBOOK,
+      role: USER_ROLE.CUSTOMER,
+      brand: BRAND_TYPE.ANGELS_PIZZA as any,
+    });
   }
 }

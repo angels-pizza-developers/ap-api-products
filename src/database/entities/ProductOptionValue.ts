@@ -1,58 +1,35 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
-@Index("ProductOptionValue_pkey", ["id"], { unique: true })
+@Index("ProductOptionValue_pkey", ["productOptionValueId"], { unique: true })
 @Entity("ProductOptionValue", { schema: "dbo" })
 export class ProductOptionValue {
-  @PrimaryGeneratedColumn({ type: "bigint", name: "Id" })
-  id: string;
+  @PrimaryGeneratedColumn({ type: "bigint", name: "ProductOptionValueId" })
+  productOptionValueId: string;
 
-  @Column("character varying", { name: "Name", length: 255 })
+  @Column("bigint", { name: "ProductOptionId" })
+  productOptionId: string;
+
+  @Column("bigint", { name: "ProductId" })
+  productId: string;
+
+  @Column("character varying", { name: "Name" })
   name: string;
 
-  @Column("numeric", { name: "Price", precision: 10, scale: 2 })
+  @Column("numeric", { name: "Price", default: () => "0" })
   price: string;
 
-  @Column("bigint", { name: "Product" })
-  product: string;
+  @Column("boolean", { name: "IsDefault", nullable: true })
+  isDefault: boolean | null;
 
-  @Column("bigint", { name: "Category" })
-  category: string;
-
-  @Column("integer", { name: "Quantity" })
-  quantity: number;
-
-  @Column("text", { name: "ImageUrl", nullable: true })
-  imageUrl: string | null;
-
-  @Column("character varying", {
-    name: "ItemCode",
-    nullable: true,
-    length: 255,
+  @Column("timestamp with time zone", {
+    name: "CreatedAt",
+    default: () => "CURRENT_TIMESTAMP",
   })
-  itemCode: string | null;
+  createdAt: Date;
 
-  @Column("boolean", { name: "IsDefault" })
-  isDefault: boolean;
+  @Column("timestamp with time zone", { name: "UpdatedAt", nullable: true })
+  updatedAt: Date | null;
 
-  @Column("integer", { name: "SortOrder" })
-  sortOrder: number;
-
-  @Column("text", { name: "Description" })
-  description: string;
-
-  @Column("character varying", {
-    name: "CategoryName",
-    nullable: true,
-    length: 255,
-  })
-  categoryName: string | null;
-
-  @Column("bigint", { name: "ProductOption" })
-  productOption: string;
-
-  @Column("text", { name: "ImageUrlSelected", nullable: true })
-  imageUrlSelected: string | null;
-
-  @Column("boolean", { name: "IsEnableOnSuperApp" })
-  isEnableOnSuperApp: boolean;
+  @Column("boolean", { name: "Active", default: () => "true" })
+  active: boolean;
 }

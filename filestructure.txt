@@ -23,6 +23,7 @@
         |-- decorators
             |-- roles.decorator.ts
         |-- filters
+            |-- all-exception.filter.ts
         |-- guards
             |-- facebook-auth.guard.ts
             |-- google-auth.guard.ts
@@ -30,6 +31,10 @@
             |-- local-auth.guard.ts
             |-- roles.guard.ts
         |-- interceptors
+        |-- interface
+            |-- payload.tokent.interface.ts
+        |-- models
+            |-- api-response.model.ts
         |-- pipes
     |-- config
         |-- app.config.ts
@@ -39,30 +44,36 @@
         |-- mapping-config.ts
         |-- secret-manager.config.ts
     |-- database
-        |-- database.module.ts
         |-- entities
-            |-- BrandPermissions.ts
-            |-- CategoryDetails.ts
-            |-- CategorySortOrder.ts
-            |-- DaysAvailability.ts
-            |-- DeliverySegment.ts
-            |-- MobileInfo.ts
-            |-- OptionValuePricing.ts
-            |-- OptionValuePricingDetail.ts
-            |-- OrderMode.ts
+            |-- AccessPermission.ts
+            |-- AccessType.ts
+            |-- Branch.ts
+            |-- BranchDaysAvailability.ts
+            |-- BranchUser.ts
+            |-- Cart.ts
+            |-- Category.ts
+            |-- CorporateUser.ts
+            |-- CustomerAddress.ts
+            |-- CustomerUser.ts
+            |-- DriverUser.ts
+            |-- Guest.ts
+            |-- Order.ts
+            |-- PaymentMethod.ts
+            |-- Permission.ts
             |-- Product.ts
+            |-- ProductBranch.ts
+            |-- ProductCategory.ts
             |-- ProductOption.ts
+            |-- ProductOptionType.ts
             |-- ProductOptionValue.ts
-            |-- ProfileCorporate.ts
-            |-- ProfileCustomer.ts
-            |-- ServiceChannel.ts
             |-- User.ts
+            |-- UserAccessType.ts
+            |-- UserAuth.ts
             |-- UserAuthLog.ts
         |-- ormconfig.json
         |-- repositories
             |-- product.repository.ts
             |-- user.repository.ts
-        |-- repository.providers.ts
         |-- tsconfig.json
         |-- typeorm.service.ts
     |-- integrations
@@ -82,11 +93,14 @@
             |-- auth.controller.spec.ts
             |-- auth.controller.ts
             |-- auth.module.ts
-            |-- auth.service.spec.ts
-            |-- auth.service.ts
             |-- dto
                 |-- login.dto.ts
                 |-- register.dto.ts
+            |-- service
+                |-- auth.service.spec.ts
+                |-- auth.service.ts
+                |-- token.service.spec.ts
+                |-- token.service.ts
             |-- strategies
                 |-- facebook.strategy.ts
                 |-- google.strategy.ts
@@ -109,29 +123,47 @@
             |-- product.module.ts
             |-- product.service.spec.ts
             |-- product.service.ts
+        |-- public
+            |-- public.controller.spec.ts
+            |-- public.controller.ts
+            |-- public.module.ts
         |-- user
             |-- dto
-                |-- create-profile-corporate.dto.ts
-                |-- create-profile-customer.dto.ts
-                |-- create-user.dto.ts
-                |-- update-user.dto.ts
+                |-- corporate-user.create.dto.ts
+                |-- mobile.dto.ts
+                |-- user.create.dto.ts
+                |-- user.update.dto.ts
             |-- service
-                |-- profile-corporate.service.spec.ts
-                |-- profile-corporate.service.ts
-                |-- profile-customer.service.spec.ts
-                |-- profile-customer.service.ts
+                |-- customer-user.service.spec.ts
+                |-- customer-user.service.ts
                 |-- user.service.spec.ts
                 |-- user.service.ts
             |-- user.controller.spec.ts
             |-- user.controller.ts
             |-- user.module.ts
+    |-- public
+        |-- assets
+            |-- email-register-verification.html
+            |-- email-reset-password-otp.html
+        |-- images
+            |-- angels-pizza-logo.png
+            |-- social-link-facebook.png
+            |-- social-link-instagram.png
+            |-- social-link-x.png
     |-- shared
         |-- constants
+            |-- api-response.constant.ts
+            |-- auth-error.constant.ts
             |-- auth-method.constant.ts
             |-- brand.constant.ts
             |-- corporate-type.constant.ts
             |-- user-role.constant.ts
+        |-- services
+            |-- email.service.spec.ts
+            |-- email.service.ts
         |-- utils
+            |-- hash.utils.ts
+            |-- path.utils.ts
 |-- test
     |-- app.e2e-spec.ts
     |-- jest-e2e.json

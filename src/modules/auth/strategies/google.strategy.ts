@@ -2,13 +2,12 @@
 // src/auth/google.strategy.ts
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
-import { Injectable } from '@nestjs/common';
-import { AuthService } from '../auth.service';
-import { RegisterCustomerDto } from '../dto/register.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BRAND_TYPE } from 'src/shared/constants/brand.constant';
 import { AUTH_METHOD } from 'src/shared/constants/auth-method.constant';
 import { USER_ROLE } from 'src/shared/constants/user-role.constant';
+import { AuthService } from '../service/auth.service';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -30,22 +29,22 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    const { emails, name } = profile;
+    const { emails } = profile;
     const email = emails[0].value; // Get the user's email
-
-    let user = await this.authService.findByEmail(email);
-    if (!user) {
-      // Register new user if not found
-      const customer = new RegisterCustomerDto();
-      customer.firstName = name.givenName;
-      customer.lastName = name.familyName;
-      customer.email = email;
-      customer.username = email;
-      customer.brand = BRAND_TYPE.ANGELS_PIZZA;
-      customer.authMethod = AUTH_METHOD.FACEBOOK as any;
-      customer.role = USER_ROLE.CUSTOMER as any;
-      user = await this.authService.registerCustomer(customer);
+    const userAuth = await this.authService.validateUserAuth(
+      BRAND_TYPE.ANGELS_PIZZA as any,
+      email,
+      AUTH_METHOD.FACEBOOK as any,
+    );
+    if (!userAuth) {
+      return done(null, false, false);
     }
-    done(null, user);
+    done(null, {
+      userId: userAuth.user.userId,
+      providerUserId: userAuth.providerUserId,
+      authMethod: AUTH_METHOD.FACEBOOK,
+      role: USER_ROLE.CUSTOMER,
+      brand: BRAND_TYPE.ANGELS_PIZZA as any,
+    });
   }
 }

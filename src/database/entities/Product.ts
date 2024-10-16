@@ -2,113 +2,68 @@ import {
   Column,
   Entity,
   Index,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { DaysAvailability } from "./DaysAvailability";
+import { ProductCategory } from "./ProductCategory";
 
-@Index("Product_pkey", ["id"], { unique: true })
+@Index("Product_pkey", ["productId"], { unique: true })
 @Entity("Product", { schema: "dbo" })
 export class Product {
-  @PrimaryGeneratedColumn({ type: "bigint", name: "Id" })
-  id: string;
+  @PrimaryGeneratedColumn({ type: "bigint", name: "ProductId" })
+  productId: string;
 
-  @Column("character varying", { name: "Sku", length: 255 })
+  @Column("character varying", { name: "Sku" })
   sku: string;
 
-  @Column("character varying", { name: "Name", length: 255 })
+  @Column("character varying", { name: "ItemCode" })
+  itemCode: string;
+
+  @Column("character varying", { name: "Name" })
   name: string;
 
-  @Column("character varying", { name: "Slug", length: 255 })
-  slug: string;
+  @Column("text", { name: "Description", nullable: true })
+  description: string | null;
 
-  @Column("character varying", { name: "Brand", length: 255 })
-  brand: string;
+  @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
+  brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
 
-  @Column("numeric", { name: "Price", precision: 10, scale: 2 })
+  @Column("numeric", { name: "Price", default: () => "0" })
   price: string;
 
-  @Column("character varying", { name: "Flavor", nullable: true, length: 255 })
+  @Column("character varying", { name: "Flavor", nullable: true })
   flavor: string | null;
 
-  @Column("boolean", { name: "IsNew" })
-  isNew: boolean;
+  @Column("boolean", { name: "IsCombo", nullable: true })
+  isCombo: boolean | null;
 
-  @Column("character varying", { name: "Status", length: 255 })
-  status: string;
+  @Column("boolean", { name: "IsBundle", nullable: true })
+  isBundle: boolean | null;
 
-  @Column("timestamp without time zone", { name: "EndsAt", nullable: true })
-  endsAt: Date | null;
+  @Column("boolean", { name: "IsSingle", nullable: true })
+  isSingle: boolean | null;
 
-  @Column("boolean", { name: "IsCombo" })
-  isCombo: boolean;
-
-  @Column("integer", { name: "Quantity" })
-  quantity: number;
+  @Column("boolean", { name: "IsFreebie", nullable: true })
+  isFreebie: boolean | null;
 
   @Column("text", { name: "ImageUrl", nullable: true })
   imageUrl: string | null;
 
-  @Column("boolean", { name: "IsBundle" })
-  isBundle: boolean;
-
-  @Column("boolean", { name: "IsSingle" })
-  isSingle: boolean;
-
-  @Column("character varying", {
-    name: "ItemCode",
-    nullable: true,
-    length: 255,
+  @Column("timestamp with time zone", {
+    name: "CreatedAt",
+    default: () => "CURRENT_TIMESTAMP",
   })
-  itemCode: string | null;
-
-  @Column("timestamp without time zone", { name: "StartsAt" })
-  startsAt: Date;
-
-  @Column("character varying", {
-    name: "BrandName",
-    nullable: true,
-    length: 255,
-  })
-  brandName: string | null;
-
-  @Column("timestamp without time zone", { name: "CreatedAt" })
   createdAt: Date;
 
-  @Column("boolean", { name: "IsFreebie" })
-  isFreebie: boolean;
+  @Column("timestamp with time zone", { name: "UpdatedAt", nullable: true })
+  updatedAt: Date | null;
 
-  @Column("timestamp without time zone", { name: "UpdatedAt" })
-  updatedAt: Date;
+  @Column("boolean", { name: "Active", default: () => "true" })
+  active: boolean;
 
-  @Column("text", { name: "Description" })
-  description: string;
-
-  @Column("character varying", {
-    name: "FlavorName",
-    nullable: true,
-    length: 255,
-  })
-  flavorName: string | null;
-
-  @Column("boolean", { name: "IsFeatured" })
-  isFeatured: boolean;
-
-  @Column("integer", { name: "DeliveryTimeMin" })
-  deliveryTimeMin: number;
-
-  @Column("boolean", { name: "IsHalfProductImage" })
-  isHalfProductImage: boolean;
-
-  @Column("numeric", { name: "MinimumAmountIfFree", precision: 10, scale: 2 })
-  minimumAmountIfFree: string;
-
-  @Column("boolean", { name: "IsSuperCardExclusive" })
-  isSuperCardExclusive: boolean;
-
-  @OneToOne(
-    () => DaysAvailability,
-    (daysAvailability) => daysAvailability.product
+  @OneToMany(
+    () => ProductCategory,
+    (productCategory) => productCategory.product
   )
-  daysAvailability: DaysAvailability;
+  productCategories: ProductCategory[];
 }

@@ -4,18 +4,12 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
+import { AllExceptionsFilter } from './common/filters/all-exception.filter';
+import { removePath } from './shared/utils/path.utils';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  app.setGlobalPrefix('api/v1', {
-    exclude: ['auth/google/callback', 'auth/facebook/callback'],
-  });
-  console.log('checking process.env.NODE_ENV', process.env.NODE_ENV);
-  console.log(
-    'checking process.env.AWS_SECRETS_NAME',
-    process.env.AWS_SECRETS_NAME,
-  );
   // the next two lines did the trick
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -31,6 +25,13 @@ async function bootstrap() {
       'jwt',
     )
     .build();
+  const excludedFromPrefix = [
+    removePath(config.get<string>('GOOGLE_CALLBACK_URL') ?? ''),
+    removePath(config.get<string>('FACEBOOK_CALLBACK_URL') ?? '')
+  ];
+  app.setGlobalPrefix('api/v1', {
+    exclude: excludedFromPrefix,
+  });
   // the next two lines did the trick
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -39,6 +40,7 @@ async function bootstrap() {
     swaggerOptions: { defaultModelsExpandDepth: -1 },
   });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  // app.useGlobalFilters(new AllExceptionsFilter()); // Apply filter globally
   await app.listen(port, () => {
     console.log(
       '[WEB]',

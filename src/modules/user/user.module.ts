@@ -1,21 +1,28 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './service/user.service';
 import { UserController } from './user.controller';
-import { ProfileCustomerService } from './service/profile-customer.service';
-import { ProfileCorporateService } from './service/profile-corporate.service';
 import { User } from 'src/database/entities/User';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProfileCustomer } from '../../database/entities/ProfileCustomer';
-import { ProfileCorporate } from 'src/database/entities/ProfileCorporate';
 import { AutoMapperModule } from 'src/common/auto-mapper/auto-mapper.module';
+import { BranchUser } from 'src/database/entities/BranchUser';
+import { DriverUser } from 'src/database/entities/DriverUser';
+import { CorporateUser } from 'src/database/entities/CorporateUser';
+import { CustomerUser } from 'src/database/entities/CustomerUser';
+import { CustomerUserService } from './service/customer-user.service';
 
 @Module({
   imports: [
     AutoMapperModule,
-    TypeOrmModule.forFeature([User, ProfileCustomer, ProfileCorporate]), // Register product entity and repository
+    TypeOrmModule.forFeature([
+      User,
+      CustomerUser,
+      CorporateUser,
+      BranchUser,
+      DriverUser,
+    ]), // Register product entity and repository
   ],
   controllers: [UserController],
-  providers: [UserService, ProfileCustomerService, ProfileCorporateService],
+  providers: [UserService, CustomerUserService],
   exports: [UserService],
 })
 export class UserModule {}

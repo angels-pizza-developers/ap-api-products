@@ -1,16 +1,18 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { UserAuth } from "./UserAuth";
 
-@Index("UserAuthLog_pkey", ["id"], { unique: true })
+@Index("UserAuthLog_pkey", ["userAuthLogId"], { unique: true })
 @Entity("UserAuthLog", { schema: "dbo" })
 export class UserAuthLog {
-  @PrimaryGeneratedColumn({ type: "bigint", name: "Id" })
-  id: string;
-
-  @Column("bigint", { name: "UserId" })
-  userId: string;
-
-  @Column("character varying", { name: "Username" })
-  username: string;
+  @PrimaryGeneratedColumn({ type: "bigint", name: "UserAuthLogId" })
+  userAuthLogId: string;
 
   @Column("character varying", { name: "UserAgent" })
   userAgent: string;
@@ -170,6 +172,10 @@ export class UserAuthLog {
   @Column("timestamp with time zone", { name: "LogOutAt", nullable: true })
   logOutAt: Date | null;
 
-  @Column("character varying", { name: "Brand" })
-  brand: string;
+  @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
+  brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
+
+  @ManyToOne(() => UserAuth, (userAuth) => userAuth.userAuthLogs)
+  @JoinColumn([{ name: "UserAuthId", referencedColumnName: "userAuthId" }])
+  userAuth: UserAuth;
 }
