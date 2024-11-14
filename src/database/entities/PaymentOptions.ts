@@ -1,10 +1,10 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
-@Index("PaymentMethod_pkey", ["paymentMethodId"], { unique: true })
-@Entity("PaymentMethod", { schema: "dbo" })
-export class PaymentMethod {
-  @PrimaryGeneratedColumn({ type: "bigint", name: "PaymentMethodId" })
-  paymentMethodId: string;
+@Index("PaymentMethod_pkey", ["paymentOptionId"], { unique: true })
+@Entity("PaymentOptions", { schema: "dbo" })
+export class PaymentOptions {
+  @PrimaryGeneratedColumn({ type: "bigint", name: "PaymentOptionId" })
+  paymentOptionId: string;
 
   @Column("character varying", { name: "Name" })
   name: string;

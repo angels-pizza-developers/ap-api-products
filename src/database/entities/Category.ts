@@ -7,6 +7,10 @@ import {
 } from "typeorm";
 import { ProductCategory } from "./ProductCategory";
 
+@Index("Category_Name_Active_idx", ["active", "name"], { unique: true })
+@Index("Category_CategoryCode_Active_idx", ["active", "categoryCode"], {
+  unique: true,
+})
 @Index("Category_pkey", ["categoryId"], { unique: true })
 @Entity("Category", { schema: "dbo" })
 export class Category {

@@ -1,9 +1,9 @@
 // src/common/guards/google-auth.guard.ts
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { ExecutionContext, Injectable } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
-export class GoogleAuthGuard extends AuthGuard('google') {
+export class GoogleAuthGuard extends AuthGuard("google") {
   constructor() {
     super();
   }
@@ -12,7 +12,6 @@ export class GoogleAuthGuard extends AuthGuard('google') {
     // If authentication fails, redirect to the desired URL
     if (!err || user) {
       return user;
-    } 
-
+    }
   }
 }

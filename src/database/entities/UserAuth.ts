@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { UserAuthLog } from "./UserAuthLog";
+import { UserAuthTokenLog } from "./UserAuthTokenLog";
 
 @Index("UserAuth_pkey", ["userAuthId"], { unique: true })
 @Entity("UserAuth", { schema: "dbo" })
@@ -81,7 +82,7 @@ export class UserAuth {
   @Column("character varying", { name: "PasswordHash", nullable: true })
   passwordHash: string | null;
 
-  @Column("boolean", { name: "IsVerified" })
+  @Column("boolean", { name: "IsVerified", default: () => "false" })
   isVerified: boolean;
 
   @Column("timestamp with time zone", {
@@ -102,4 +103,10 @@ export class UserAuth {
 
   @OneToMany(() => UserAuthLog, (userAuthLog) => userAuthLog.userAuth)
   userAuthLogs: UserAuthLog[];
+
+  @OneToMany(
+    () => UserAuthTokenLog,
+    (userAuthTokenLog) => userAuthTokenLog.userAuth
+  )
+  userAuthTokenLogs: UserAuthTokenLog[];
 }

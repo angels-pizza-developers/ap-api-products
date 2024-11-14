@@ -1,6 +1,19 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { User } from "./User";
 
+@Index("CorporateUser_MobileNumber_Active_idx", ["active", "mobileNumber"], {
+  unique: true,
+})
+@Index("CorporateUser_Email_Active_idx", ["active", "email"], { unique: true })
 @Index("CorporateUser_pkey", ["corporateUserId"], { unique: true })
+@Index("CorporateUser_UserId_idx", ["userId"], { unique: true })
 @Entity("CorporateUser", { schema: "dbo" })
 export class CorporateUser {
   @PrimaryGeneratedColumn({ type: "bigint", name: "CorporateUserId" })
@@ -12,14 +25,8 @@ export class CorporateUser {
   @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
   brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
 
-  @Column("character varying", { name: "FirstName" })
-  firstName: string;
-
-  @Column("character varying", { name: "MiddleName", nullable: true })
-  middleName: string | null;
-
-  @Column("character varying", { name: "LastName" })
-  lastName: string;
+  @Column("character varying", { name: "Name" })
+  name: string;
 
   @Column("character varying", { name: "Email", nullable: true })
   email: string | null;
@@ -41,4 +48,8 @@ export class CorporateUser {
 
   @Column("boolean", { name: "Active", default: () => "true" })
   active: boolean;
+
+  @OneToOne(() => User, (user) => user.corporateUser)
+  @JoinColumn([{ name: "UserId", referencedColumnName: "userId" }])
+  user: User;
 }

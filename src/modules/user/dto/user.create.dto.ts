@@ -1,7 +1,13 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsEmail, IsIn, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
-import { MobileNumberDto } from './mobile.dto';
+import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
+import {
+  IsEmail,
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  ValidateNested,
+} from "class-validator";
+import { MobileNumberDto } from "./mobile.dto";
 
 export class CreateUserDto {
   @ApiProperty()
@@ -15,12 +21,12 @@ export class CreateUserDto {
   @ApiProperty()
   @IsNotEmpty()
   lastName: string;
-  
+
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  
+
   @ApiProperty({
     isArray: false,
     type: MobileNumberDto,

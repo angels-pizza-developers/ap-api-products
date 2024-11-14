@@ -19,9 +19,38 @@ export class UserAuthLog {
 
   @Column("enum", {
     name: "EventType",
-    enum: ["LOGIN", "LOGOUT", "PASSWORD_RESET"],
+    enum: [
+      "EMAIL_VERIFICATION",
+      "EMAIL_CHANGE",
+      "EMAIL_UPDATE_VERIFICATION",
+      "PHONE_VERIFICATION",
+      "ACCOUNT_ACTIVATION",
+      "ACCOUNT_DEACTIVATION",
+      "ACCOUNT_REACTIVATION",
+      "LOGIN_CONFIRMATION",
+      "ACCOUNT_DELETION",
+      "SOCIAL_LOGIN_LINK",
+      "DEVICE_VERIFICATION",
+      "LOGIN",
+      "LOGOUT",
+      "PASSWORD_RESET",
+    ],
   })
-  eventType: "LOGIN" | "LOGOUT" | "PASSWORD_RESET";
+  eventType:
+    | "EMAIL_VERIFICATION"
+    | "EMAIL_CHANGE"
+    | "EMAIL_UPDATE_VERIFICATION"
+    | "PHONE_VERIFICATION"
+    | "ACCOUNT_ACTIVATION"
+    | "ACCOUNT_DEACTIVATION"
+    | "ACCOUNT_REACTIVATION"
+    | "LOGIN_CONFIRMATION"
+    | "ACCOUNT_DELETION"
+    | "SOCIAL_LOGIN_LINK"
+    | "DEVICE_VERIFICATION"
+    | "LOGIN"
+    | "LOGOUT"
+    | "PASSWORD_RESET";
 
   @Column("timestamp without time zone", {
     name: "EventTime",
@@ -122,6 +151,7 @@ export class UserAuthLog {
 
   @Column("enum", {
     name: "MfaMethod",
+    nullable: true,
     enum: [
       "SMS",
       "EMAIL",
@@ -137,7 +167,8 @@ export class UserAuthLog {
     | "AUTH_APP"
     | "HARDWARE_TOKEN"
     | "PUSH_NOTIFICATION"
-    | "BIOMETRICS";
+    | "BIOMETRICS"
+    | null;
 
   @Column("enum", {
     name: "MfaStatus",
@@ -174,6 +205,12 @@ export class UserAuthLog {
 
   @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
   brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
+
+  @Column("character varying", { name: "AccessToken" })
+  accessToken: string;
+
+  @Column("character varying", { name: "RefreshToken" })
+  refreshToken: string;
 
   @ManyToOne(() => UserAuth, (userAuth) => userAuth.userAuthLogs)
   @JoinColumn([{ name: "UserAuthId", referencedColumnName: "userAuthId" }])

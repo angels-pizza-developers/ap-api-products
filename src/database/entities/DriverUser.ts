@@ -3,28 +3,30 @@ import {
   Entity,
   Index,
   JoinColumn,
-  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
 
+@Index("DriverUser_Email_Active_idx", ["active", "email"], { unique: true })
+@Index("DriverUser_MobileNumber_Active_idx", ["active", "mobileNumber"], {
+  unique: true,
+})
 @Index("DriverUser_pkey", ["driverUserId"], { unique: true })
+@Index("DriverUser_UserId_idx", ["userId"], { unique: true })
 @Entity("DriverUser", { schema: "dbo" })
 export class DriverUser {
   @PrimaryGeneratedColumn({ type: "bigint", name: "DriverUserId" })
   driverUserId: string;
 
+  @Column("bigint", { name: "UserId" })
+  userId: string;
+
   @Column("enum", { name: "Brand", enum: ["ANGELS_PIZZA", "FIGARO_COFFEE"] })
   brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
 
-  @Column("character varying", { name: "FirstName" })
-  firstName: string;
-
-  @Column("character varying", { name: "MiddleName", nullable: true })
-  middleName: string | null;
-
-  @Column("character varying", { name: "LastName" })
-  lastName: string;
+  @Column("character varying", { name: "Name" })
+  name: string;
 
   @Column("character varying", { name: "Email", nullable: true })
   email: string | null;
@@ -47,7 +49,7 @@ export class DriverUser {
   @Column("boolean", { name: "Active", default: () => "true" })
   active: boolean;
 
-  @ManyToOne(() => User, (user) => user.driverUsers)
+  @OneToOne(() => User, (user) => user.driverUser)
   @JoinColumn([{ name: "UserId", referencedColumnName: "userId" }])
   user: User;
 }

@@ -1,76 +1,43 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Product } from './entities/Product';
-import { ProductOption } from './entities/ProductOption';
-import { ProductOptionType } from './entities/ProductOptionType';
-import { ProductOptionValue } from './entities/ProductOptionValue';
-import { ProductBranch } from './entities/ProductBranch';
-import { AccessPermission } from './entities/AccessPermission';
-import { AccessType } from './entities/AccessType';
-import { UserAccessType } from './entities/UserAccessType';
-import { Permission } from './entities/Permission';
-import { User } from './entities/User';
-import { UserAuth } from './entities/UserAuth';
-import { CustomerUser } from './entities/CustomerUser';
-import { CorporateUser } from './entities/CorporateUser';
-import { BranchUser } from './entities/BranchUser';
-import { DriverUser } from './entities/DriverUser';
-import { Branch } from './entities/Branch';
-import { PaymentMethod } from './entities/PaymentMethod';
-import { Guest } from './entities/Guest';
-import { ProductCategory } from './entities/ProductCategory';
-import { Category } from './entities/Category';
-import { UserAuthLog } from './entities/UserAuthLog';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { DataSourceOptions } from "typeorm";
+import { join } from "path";
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
-  @Inject(ConfigService)
-  private readonly config: ConfigService;
+  private readonly configService: ConfigService;
+
+  constructor(configService?: ConfigService) {
+    this.configService = configService || new ConfigService();
+  }
 
   public createTypeOrmOptions(): TypeOrmModuleOptions {
-    const ssl = this.config.get<string>('SSL');
-    const synchronize = this.config.get<string>('DB_SYNCHRONIZE');
-    const config: TypeOrmModuleOptions = {
-      type: 'postgres',
-      host: this.config.get<string>('DB_HOST'),
-      port: Number(this.config.get<number>('DB_PORT')),
-      database: this.config.get<string>('DB_DATABASE'),
-      username: this.config.get<string>('DB_USERNAME'),
-      password: this.config.get<string>('DB_PASSWORD'),
-      entities: [
-        Product,
-        ProductOption,
-        ProductOptionType,
-        ProductOptionValue,
-        ProductBranch,
-        Category,
-        ProductCategory,
-        Permission,
-        AccessPermission,
-        AccessType,
-        UserAccessType,
-        Guest,
-        User,
-        UserAuth,
-        UserAuthLog,
-        CustomerUser,
-        CorporateUser,
-        BranchUser,
-        DriverUser,
-        Branch,
-        PaymentMethod
-      ],
-      synchronize: synchronize.toLocaleLowerCase().includes('true'), // never use TRUE in production!
-      ssl: ssl.toLocaleLowerCase().includes('true'),
-      extra: {},
+    return {
+      ...this.getDataSourceOptions(), // Using common options for both cases
+      retryAttempts: 3,
+      autoLoadEntities: true,
+      // other NestJS-specific options if needed
     };
-    if (config.ssl) {
-      config.extra.ssl = {
-        require: true,
-        rejectUnauthorized: false,
-      };
-    }
-    return config;
+  }
+
+  public getDataSourceOptions(): DataSourceOptions {
+    const ssl = this.configService.get<string>("SSL");
+    const synchronize = this.configService.get<string>("DB_SYNCHRONIZE");
+    return {
+      type: "postgres",
+      host: this.configService.get<string>("DB_HOST"),
+      port: Number(this.configService.get<number>("DB_PORT")),
+      database: this.configService.get<string>("DB_DATABASE"),
+      username: this.configService.get<string>("DB_USERNAME"),
+      password: this.configService.get<string>("DB_PASSWORD"),
+      entities: [join(__dirname, "entities", "*{.ts,.js}")],
+      migrations: [join(__dirname, "migrations/*{.ts,.js}")],
+      synchronize: synchronize.toLowerCase().includes("true"), // Never use TRUE in production!
+      ssl: ssl.toLowerCase().includes("true"),
+      extra: ssl.toLowerCase().includes("true")
+        ? { ssl: { require: true, rejectUnauthorized: false } }
+        : {},
+    };
   }
 }

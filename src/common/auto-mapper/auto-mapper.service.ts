@@ -1,12 +1,12 @@
 // src/common/auto-mapper/auto-mapper.service.ts
-import { Injectable, Inject } from '@nestjs/common';
-import { plainToInstance, instanceToPlain } from 'class-transformer';
-import { MappingConfig } from './mapping-config.interface';
+import { Injectable, Inject } from "@nestjs/common";
+import { plainToInstance, instanceToPlain } from "class-transformer";
+import { MappingConfig } from "./mapping-config.interface";
 
 @Injectable()
 export class AutoMapperService {
   constructor(
-    @Inject('MAPPING_CONFIG')
+    @Inject("MAPPING_CONFIG")
     private readonly mappingConfig: { [key: string]: MappingConfig },
   ) {}
 

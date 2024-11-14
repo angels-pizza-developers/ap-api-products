@@ -1,13 +1,18 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { CustomerUser } from "./CustomerUser";
 
 @Index("CustomerAddress_pkey", ["customerAddressId"], { unique: true })
 @Entity("CustomerAddress", { schema: "dbo" })
 export class CustomerAddress {
   @PrimaryGeneratedColumn({ type: "bigint", name: "CustomerAddressId" })
   customerAddressId: string;
-
-  @Column("bigint", { name: "CustomerUserId" })
-  customerUserId: string;
 
   @Column("character varying", { name: "Province", nullable: true })
   province: string | null;
@@ -44,4 +49,13 @@ export class CustomerAddress {
 
   @Column("boolean", { name: "Active", default: () => "true" })
   active: boolean;
+
+  @ManyToOne(
+    () => CustomerUser,
+    (customerUser) => customerUser.customerAddresses
+  )
+  @JoinColumn([
+    { name: "CustomerUserId", referencedColumnName: "customerUserId" },
+  ])
+  customerUser: CustomerUser;
 }

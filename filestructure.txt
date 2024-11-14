@@ -4,7 +4,11 @@
 |-- .eslintrc.js
 |-- .gitignore
 |-- .prettierrc
+|-- data-source.ts
 |-- db-first-command.txt
+|-- generate-migration.ts
+|-- generate-models.js
+|-- generate-repositories.js
 |-- LICENSE
 |-- nest-cli.json
 |-- package-lock.json
@@ -21,7 +25,12 @@
             |-- auto-mapper.service.ts
             |-- mapping-config.interface.ts
         |-- decorators
+            |-- request-metadata.decorator.ts
             |-- roles.decorator.ts
+            |-- status-response-format.decorator.ts
+            |-- use-api-response-format.decorator.ts
+        |-- factory
+            |-- request-metadata.factory.ts
         |-- filters
             |-- all-exception.filter.ts
         |-- guards
@@ -29,12 +38,15 @@
             |-- google-auth.guard.ts
             |-- jwt-auth.guard.ts
             |-- local-auth.guard.ts
+            |-- request-metadata.guard.ts
             |-- roles.guard.ts
         |-- interceptors
+            |-- response.interceptor.ts
         |-- interface
             |-- payload.tokent.interface.ts
         |-- models
             |-- api-response.model.ts
+            |-- request-metadata.model.ts
         |-- pipes
     |-- config
         |-- app.config.ts
@@ -45,8 +57,7 @@
         |-- secret-manager.config.ts
     |-- database
         |-- entities
-            |-- AccessPermission.ts
-            |-- AccessType.ts
+            |-- Access.ts
             |-- Branch.ts
             |-- BranchDaysAvailability.ts
             |-- BranchUser.ts
@@ -58,8 +69,7 @@
             |-- DriverUser.ts
             |-- Guest.ts
             |-- Order.ts
-            |-- PaymentMethod.ts
-            |-- Permission.ts
+            |-- PaymentOptions.ts
             |-- Product.ts
             |-- ProductBranch.ts
             |-- ProductCategory.ts
@@ -67,12 +77,34 @@
             |-- ProductOptionType.ts
             |-- ProductOptionValue.ts
             |-- User.ts
-            |-- UserAccessType.ts
             |-- UserAuth.ts
             |-- UserAuthLog.ts
+            |-- UserAuthTokenLog.ts
         |-- ormconfig.json
         |-- repositories
+            |-- access.repository.ts
+            |-- base.repository.ts
+            |-- branch-days-availability.repository.ts
+            |-- branch-user.repository.ts
+            |-- branch.repository.ts
+            |-- cart.repository.ts
+            |-- category.repository.ts
+            |-- corporate-user.repository.ts
+            |-- customer-address.repository.ts
+            |-- customer-user.repository.ts
+            |-- driver-user.repository.ts
+            |-- guest.repository.ts
+            |-- order.repository.ts
+            |-- payment-options.repository.ts
+            |-- product-branch.repository.ts
+            |-- product-category.repository.ts
+            |-- product-option-type.repository.ts
+            |-- product-option-value.repository.ts
+            |-- product-option.repository.ts
             |-- product.repository.ts
+            |-- user-auth-log.repository.ts
+            |-- user-auth-token-log.repository.ts
+            |-- user-auth.repository.ts
             |-- user.repository.ts
         |-- tsconfig.json
         |-- typeorm.service.ts
@@ -89,6 +121,16 @@
             |-- onesignal.strategy.ts
     |-- main.ts
     |-- modules
+        |-- access
+            |-- access.controller.spec.ts
+            |-- access.controller.ts
+            |-- access.module.ts
+            |-- access.service.spec.ts
+            |-- access.service.ts
+            |-- dto
+                |-- access.base.dto.ts
+                |-- access.create.dto.ts
+                |-- access.update.dto.ts
         |-- auth
             |-- auth.controller.spec.ts
             |-- auth.controller.ts
@@ -105,6 +147,64 @@
                 |-- facebook.strategy.ts
                 |-- google.strategy.ts
                 |-- jwt.strategy.ts
+        |-- branch
+            |-- branch.controller.spec.ts
+            |-- branch.controller.ts
+            |-- branch.module.ts
+            |-- branch.service.spec.ts
+            |-- branch.service.ts
+            |-- dto
+                |-- branch.base.dto.ts
+                |-- branch.create.dto.ts
+                |-- branch.update.dto.ts
+        |-- branch-user
+            |-- branch-user.controller.spec.ts
+            |-- branch-user.controller.ts
+            |-- branch-user.module.ts
+            |-- branch-user.service.spec.ts
+            |-- branch-user.service.ts
+            |-- dto
+                |-- branch-user.base.dto.ts
+                |-- branch-user.create.dto.ts
+                |-- branch-user.update.dto.ts
+        |-- category
+            |-- category.controller.spec.ts
+            |-- category.controller.ts
+            |-- category.module.ts
+            |-- category.service.spec.ts
+            |-- category.service.ts
+            |-- dto
+                |-- category.base.dto.ts
+                |-- category.create.dto.ts
+                |-- category.update.dto.ts
+        |-- corporate-user
+            |-- corporate-user.controller.spec.ts
+            |-- corporate-user.controller.ts
+            |-- corporate-user.module.ts
+            |-- corporate-user.service.spec.ts
+            |-- corporate-user.service.ts
+            |-- dto
+                |-- corporate-user.base.dto.ts
+                |-- corporate-user.create.dto.ts
+                |-- corporate-user.update.dto.ts
+        |-- customer-user
+            |-- customer-user.controller.spec.ts
+            |-- customer-user.controller.ts
+            |-- customer-user.module.ts
+            |-- customer-user.service.spec.ts
+            |-- customer-user.service.ts
+            |-- dto
+                |-- create-customer-user.dto.ts
+                |-- update-customer-user.dto.ts
+        |-- driver-user
+            |-- driver-user.controller.spec.ts
+            |-- driver-user.controller.ts
+            |-- driver-user.module.ts
+            |-- driver-user.service.spec.ts
+            |-- driver-user.service.ts
+            |-- dto
+                |-- create-driver-user.dto.ts
+                |-- update-driver-user.dto.ts
         |-- order
             |-- dto
                 |-- create-order.dto.ts
@@ -134,8 +234,6 @@
                 |-- user.create.dto.ts
                 |-- user.update.dto.ts
             |-- service
-                |-- customer-user.service.spec.ts
-                |-- customer-user.service.ts
                 |-- user.service.spec.ts
                 |-- user.service.ts
             |-- user.controller.spec.ts
@@ -145,6 +243,7 @@
         |-- assets
             |-- email-register-verification.html
             |-- email-reset-password-otp.html
+            |-- page-permissions.json
         |-- images
             |-- angels-pizza-logo.png
             |-- social-link-facebook.png
@@ -154,16 +253,30 @@
         |-- constants
             |-- api-response.constant.ts
             |-- auth-error.constant.ts
+            |-- auth-event-type.constant.ts
             |-- auth-method.constant.ts
+            |-- auth-status.constant.ts
+            |-- auth-token-status.constant.ts
+            |-- auth-token-type.constant.ts
             |-- brand.constant.ts
             |-- corporate-type.constant.ts
+            |-- request-metadata-error.constant.ts
             |-- user-role.constant.ts
+            |-- user.constant.ts
+        |-- dtos
+            |-- match.decorator.dto.ts
+            |-- pagination-params.dto.ts
         |-- services
             |-- email.service.spec.ts
             |-- email.service.ts
         |-- utils
+            |-- array.utils.ts
+            |-- crypto.utils.ts
+            |-- database.utils.ts
+            |-- entity.utils.ts
             |-- hash.utils.ts
             |-- path.utils.ts
+            |-- time-formatter.utils.ts
 |-- test
     |-- app.e2e-spec.ts
     |-- jest-e2e.json

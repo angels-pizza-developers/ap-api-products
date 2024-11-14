@@ -1,4 +1,6 @@
-export const USER_ROLE = {
-  CORPORATE: 'CORPORATE',
-  CUSTOMER: 'CUSTOMER',
-};
+export enum USER_ROLE {
+  CUSTOMER = "CUSTOMER",
+  CORPORATE = "CORPORATE",
+  BRANCH = "BRANCH",
+  DRIVER = "DRIVER",
+}

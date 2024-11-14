@@ -1,17 +1,17 @@
-import { USER_ROLE } from 'src/shared/constants/user-role.constant';
+import { USER_ROLE } from "src/shared/constants/user-role.constant";
 
 // src/common/config/mapping-config.ts
 export const mappingConfig = {
   RegisterCustomerDtoToCreateUserDto: {
     username: (sourceValue, sourceObject) => {
-      if (sourceObject.username && sourceObject.username !== '') {
+      if (sourceObject.username && sourceObject.username !== "") {
         return sourceObject.username;
       } else if (
-        (!sourceObject.username || sourceObject.username === '') &&
+        (!sourceObject.username || sourceObject.username === "") &&
         sourceObject.email &&
-        sourceObject.email !== ''
+        sourceObject.email !== ""
       ) {
-        return sourceObject.email
+        return sourceObject.email;
       } else {
         return null;
       }

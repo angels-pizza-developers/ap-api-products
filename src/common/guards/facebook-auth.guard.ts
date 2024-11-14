@@ -1,9 +1,9 @@
 // src/common/guards/facebook-auth.guard.ts
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { ExecutionContext, Injectable } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
-export class FacebookAuthGuard extends AuthGuard('facebook') {
+export class FacebookAuthGuard extends AuthGuard("facebook") {
   constructor() {
     super();
   }
@@ -12,7 +12,6 @@ export class FacebookAuthGuard extends AuthGuard('facebook') {
     // If authentication fails, redirect to the desired URL
     if (!err || user) {
       return user;
-    } 
-
+    }
   }
 }

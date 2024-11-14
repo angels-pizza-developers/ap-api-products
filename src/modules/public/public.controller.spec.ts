@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PublicController } from './public.controller';
-import { PublicService } from './public.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { PublicController } from "./public.controller";
+import { PublicService } from "./public.service";
 
-describe('PublicController', () => {
+describe("PublicController", () => {
   let controller: PublicController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('PublicController', () => {
     controller = module.get<PublicController>(PublicController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

@@ -4,7 +4,7 @@
 
 ## Overview
 
-This is a [NestJS](https://nestjs.com/) project that uses PostgreSQL as the database. The project follows the code-first approach with TypeORM to automatically synchronize the database schema from the entities defined in the code. 
+This is a [NestJS](https://nestjs.com/) project that uses PostgreSQL as the database. The project follows the code-first approach with TypeORM to automatically synchronize the database schema from the entities defined in the code.
 
 ## Prerequisites
 
@@ -17,7 +17,6 @@ Before you start, ensure you have the following installed:
 ## Getting Started
 
 Follow these instructions to set up the project on your local machine.
-
 
 Clone the project from the repository:
 
@@ -47,7 +46,8 @@ API_PREFIX=api/v1
 BASE_URL=http://localhost
 
 # AUTH
-AUTH_TOKEN_EXPIRE=1hr
+AUTH_ACCESS_TOKEN_EXPIRE=1hr
+AUTH_VERIFY_TOKEN_EXPIRE=1hr
 AUTH_ALGORITHM=RS256
 
 # JWT secret key
@@ -122,12 +122,10 @@ Check out a few resources that may come in handy when working with NestJS:
 
 This project is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
-
-
 ## Project File Structure
 
 ```bash
-root 
+root
 |-- src
     |-- common
         |-- auto-mapper
@@ -143,7 +141,7 @@ root
         |-- firebase
         |-- onesignal
     |-- main.ts
-    |-- modules 
+    |-- modules
         |-- auth
         |-- order
         |-- product

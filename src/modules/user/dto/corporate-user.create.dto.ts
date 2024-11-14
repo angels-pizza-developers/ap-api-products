@@ -1,14 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import {
   IsNotEmpty,
   IsOptional,
   IsEmail,
   ValidateNested,
-} from 'class-validator';
-import moment from 'moment';
-import { MobileNumberDto } from './mobile.dto';
-import { CreateUserDto } from './user.create.dto';
+} from "class-validator";
+import moment from "moment";
+import { MobileNumberDto } from "./mobile.dto";
+import { CreateUserDto } from "./user.create.dto";
 
 export class CreateCorporateUserDto extends CreateUserDto {
   @ApiProperty()

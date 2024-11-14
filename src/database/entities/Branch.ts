@@ -7,6 +7,10 @@ import {
 } from "typeorm";
 import { BranchUser } from "./BranchUser";
 
+@Index("Branch_BranchCode_Active_idx", ["active", "branchCode"], {
+  unique: true,
+})
+@Index("Branch_Name_Active_idx", ["active", "name"], { unique: true })
 @Index("Branch_pkey", ["branchId"], { unique: true })
 @Entity("Branch", { schema: "dbo" })
 export class Branch {
@@ -64,11 +68,11 @@ export class Branch {
   @Column("numeric", { name: "MaxOrderValue", default: () => "0" })
   maxOrderValue: string;
 
-  @Column("timestamp with time zone", { name: "OpensAt", nullable: true })
-  opensAt: Date | null;
+  @Column("time with time zone", { name: "OpensAt", nullable: true })
+  opensAt: string | null;
 
-  @Column("timestamp with time zone", { name: "ClosesAt", nullable: true })
-  closesAt: Date | null;
+  @Column("time with time zone", { name: "ClosesAt", nullable: true })
+  closesAt: string | null;
 
   @Column("timestamp with time zone", { name: "ClosedFrom", nullable: true })
   closedFrom: Date | null;
