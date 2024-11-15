@@ -32,9 +32,9 @@ export class EmailService {
           pass: authEmailPass.toString().trim(), // Replace with your Gmail App Password
         },
       });
+      
       const emailTemplate = await readFile(
-        path.join(__dirname, emailTempPath),
-        "utf-8",
+        emailTempPath.toString().includes("http") ? emailTempPath : (path.join(__dirname, emailTempPath),"utf-8"),
       );
       const template = Handlebars.compile(emailTemplate);
       const result = template({
@@ -84,8 +84,7 @@ export class EmailService {
         },
       });
       const emailTemplate = await readFile(
-        path.join(__dirname, emailTempPath),
-        "utf-8",
+        emailTempPath.toString().includes("http") ? emailTempPath : (path.join(__dirname, emailTempPath),"utf-8"),
       );
       const template = Handlebars.compile(emailTemplate);
       const result = template({
