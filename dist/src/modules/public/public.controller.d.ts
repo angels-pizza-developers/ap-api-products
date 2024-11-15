@@ -1,5 +1,6 @@
 import { Response } from "express";
 export declare class PublicController {
     constructor();
-    seeUploadedFile(image: any, res: Response): void;
+    seePublicImages(image: string, res: Response): void;
+    seeAssets(image: string, res: Response): void;
 }

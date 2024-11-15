@@ -33,7 +33,7 @@ const config = createConfig();
       ...config,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "public"), // Serve files from /public
+      rootPath: join(__dirname, "public"), // Serve files from /public
       serveRoot: "/public", // Access via /public in URL
     }),
     // ConfigAppModule, // Configuration module

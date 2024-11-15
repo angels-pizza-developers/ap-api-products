@@ -42,7 +42,7 @@ exports.AppModule = AppModule = __decorate([
                 ...config,
             }),
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, "..", "public"),
+                rootPath: (0, path_1.join)(__dirname, "public"),
                 serveRoot: "/public",
             }),
             typeorm_1.TypeOrmModule.forRootAsync({ useClass: typeorm_service_1.TypeOrmConfigService }),

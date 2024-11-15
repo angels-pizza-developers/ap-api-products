@@ -13,6 +13,7 @@
 |-- nest-cli.json
 |-- package-lock.json
 |-- package.json
+|-- production.env
 |-- README.md
 |-- src
     |-- app.controller.spec.ts
@@ -282,3 +283,4 @@
     |-- jest-e2e.json
 |-- tsconfig.build.json
 |-- tsconfig.json
+|-- vercel.json
