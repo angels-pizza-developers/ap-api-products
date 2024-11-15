@@ -1,0 +1,34 @@
+export declare class Cart {
+    cartId: string;
+    customerUserId: string | null;
+    guestId: string | null;
+    firstName: string;
+    lastName: string;
+    mobileNumber: string | null;
+    mobileCountryCode: string | null;
+    email: string | null;
+    paymentMethodId: string;
+    paymentChangeFor: string | null;
+    deliveryAddress: string;
+    locationCoordinates: object;
+    customerAddressId: string;
+    deliveryFee: string;
+    disposition: "DELIVER" | "PICK_UP";
+    dispositionType: "NOW" | "LATER";
+    dispositionSchedule: Date | null;
+    promoCode: string | null;
+    subtotal: string;
+    discount: string;
+    total: string;
+    isIncludeUtensils: boolean | null;
+    specialInstructions: string | null;
+    notesToRider: string | null;
+    pendingStateAt: Date | null;
+    cancelledStateAt: Date | null;
+    cancelReason: string | null;
+    additionalReason: string | null;
+    brand: "ANGELS_PIZZA" | "FIGARO_COFFEE";
+    createdAt: Date;
+    updatedAt: Date | null;
+    active: boolean;
+}

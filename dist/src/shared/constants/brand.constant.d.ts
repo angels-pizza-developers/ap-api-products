@@ -1,0 +1,4 @@
+export declare enum BRAND_TYPE {
+    ANGELS_PIZZA = "ANGELS_PIZZA",
+    FIGARO_COFFEE = "FIGARO_COFFEE"
+}

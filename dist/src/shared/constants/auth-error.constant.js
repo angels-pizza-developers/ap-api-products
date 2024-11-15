@@ -1,0 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AUTH_ERROR_REQUEST_ERROR = exports.AUTH_ERROR_INVALID_CREDENTIALS = exports.REFRESH_ERROR_INVALID_TOKEN = exports.LINK_SOCIAL_ERROR = exports.VERIFICATION_ERROR_INVALID_EMAIL = exports.VERIFICATION_ERROR_FAILED_USED = exports.VERIFICATION_ERROR_FAILED_INVALID = exports.VERIFICATION_ERROR_FAILED = exports.REGISTER_ERROR_PASSWORD_EMPTY = exports.REGISTER_ERROR_MOBILE_NUMBER_USED = exports.REGISTER_ERROR_EMAIL_USED = exports.REGISTER_ERROR_FAILED = exports.LOGIN_ERROR_GOOGLE_NOT_LINKED = exports.LOGIN_ERROR_FACEBOOK_NOT_LINKED = exports.LOGIN_ERROR_SOCIAL_SERVICE_ERROR = exports.LOGIN_ERROR_USERTYPE_INCORRECT = exports.LOGIN_ERROR_NOT_VERIFIED = exports.LOGIN_ERROR_PENDING_ACCESS_REQUEST = exports.LOGIN_ERROR_PASSWORD_INCORRECT = exports.LOGIN_ERROR_EMAIL_NOT_FOUND = exports.LOGIN_ERROR_USER_NOT_FOUND = exports.LOGIN_ERROR_FAILED = void 0;
+exports.LOGIN_ERROR_FAILED = "Login failed. Please try again.";
+exports.LOGIN_ERROR_USER_NOT_FOUND = "User not found!";
+exports.LOGIN_ERROR_EMAIL_NOT_FOUND = "No account found with this email. Please check your email or sign up for a new account.";
+exports.LOGIN_ERROR_PASSWORD_INCORRECT = "Password is incorrect!";
+exports.LOGIN_ERROR_PENDING_ACCESS_REQUEST = "Not allowed!. The user has a pending access request!";
+exports.LOGIN_ERROR_NOT_VERIFIED = "Login Failed: Your account has not been verified yet. Please check your email for the verification link to activate your account.";
+exports.LOGIN_ERROR_USERTYPE_INCORRECT = "There was a problem checking your user account please ask a developer support or log a ticket!";
+exports.LOGIN_ERROR_SOCIAL_SERVICE_ERROR = "Failed to retrieve user information from the social provider. Please try again.";
+exports.LOGIN_ERROR_FACEBOOK_NOT_LINKED = "Facebook account not linked. Please sign up or log in to continue.";
+exports.LOGIN_ERROR_GOOGLE_NOT_LINKED = "Google account not linked. Please sign up or log in to continue.";
+exports.REGISTER_ERROR_FAILED = "Registration failed. Please try again.";
+exports.REGISTER_ERROR_EMAIL_USED = "This email is already registered. Please log in or use a different email to sign up.";
+exports.REGISTER_ERROR_MOBILE_NUMBER_USED = "This mobile number is already registered. Please log in or use a different mobile number to sign up.";
+exports.REGISTER_ERROR_PASSWORD_EMPTY = "This mobile number is already registered. Please log in or use a different mobile number to sign up.";
+exports.VERIFICATION_ERROR_FAILED = "Verification failed. Please try again.";
+exports.VERIFICATION_ERROR_FAILED_INVALID = "Invalid verification token.";
+exports.VERIFICATION_ERROR_FAILED_USED = "Verification token already used.";
+exports.VERIFICATION_ERROR_INVALID_EMAIL = "No account found with this email";
+exports.LINK_SOCIAL_ERROR = "Link social failed. Please try again.";
+exports.REFRESH_ERROR_INVALID_TOKEN = "Invalid refresh token";
+exports.AUTH_ERROR_INVALID_CREDENTIALS = "Invalid credentials";
+exports.AUTH_ERROR_REQUEST_ERROR = "One or more request parameters are invalid. Please check your request and try again";
+//# sourceMappingURL=auth-error.constant.js.map

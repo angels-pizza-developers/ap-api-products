@@ -1,0 +1,47 @@
+[
+  {
+    "permissionCode": "CORPORATE_USER",
+    "permissionGroup": "SETTINGS",
+    "pageName": "Corporate"
+  },
+  {
+    "permissionCode": "BRANCH_USER",
+    "permissionGroup": "SETTINGS",
+    "pageName": "Branch"
+  },
+  {
+    "permissionCode": "DRIVER_USER",
+    "permissionGroup": "SETTINGS",
+    "pageName": "Driver"
+  },
+  {
+    "permissionCode": "ACCESS_TYPE",
+    "permissionGroup": "SETTINGS",
+    "pageName": "Access Type"
+  },
+  {
+    "permissionCode": "CATEGORY",
+    "permissionGroup": "PRODUCT",
+    "pageName": "Category"
+  },
+  {
+    "permissionCode": "PRODUCTS",
+    "permissionGroup": "PRODUCT",
+    "pageName": "Products"
+  },
+  {
+    "permissionCode": "ORDERS",
+    "permissionGroup": "ORDER",
+    "pageName": "Orders"
+  },
+  {
+    "permissionCode": "STORES",
+    "permissionGroup": "STORE",
+    "pageName": "Stores"
+  },
+  {
+    "permissionCode": "STORE_INVENTORY",
+    "permissionGroup": "STORE",
+    "pageName": "Store Inventory"
+  }
+]

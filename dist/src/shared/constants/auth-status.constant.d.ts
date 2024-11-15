@@ -1,0 +1,9 @@
+export declare enum AUTH_STATUS {
+    SUCCESS = "SUCCESS",
+    FAILED = "FAILED",
+    LOCKED = "LOCKED",
+    PENDING = "PENDING",
+    EXPIRED = "EXPIRED",
+    TIMED_OUT = "TIMED_OUT",
+    MFA_REQUIRED = "MFA_REQUIRED"
+}
