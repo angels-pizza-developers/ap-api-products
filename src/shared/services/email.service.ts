@@ -32,10 +32,7 @@ export class EmailService {
           pass: authEmailPass.toString().trim(), // Replace with your Gmail App Password
         },
       });
-      
-      const emailTemplate = await readFile(
-        emailTempPath.toString().includes("http") ? emailTempPath : (path.join(__dirname, emailTempPath),"utf-8"),
-      );
+      const emailTemplate = emailTempPath.toString().includes("http") ? await readFile(emailTempPath, "utf-8") : await readFile(path.join(__dirname, emailTempPath),"utf-8");
       const template = Handlebars.compile(emailTemplate);
       const result = template({
         AUTH_VERIFY_URL: `${verifyURL}?token=${token}&provider_user=${recipient}`,
@@ -83,9 +80,7 @@ export class EmailService {
           pass: authEmailPass.toString().trim(), // Replace with your Gmail App Password
         },
       });
-      const emailTemplate = await readFile(
-        emailTempPath.toString().includes("http") ? emailTempPath : (path.join(__dirname, emailTempPath),"utf-8"),
-      );
+      const emailTemplate = emailTempPath.toString().includes("http") ? await readFile(emailTempPath, "utf-8") : await readFile(path.join(__dirname, emailTempPath),"utf-8");
       const template = Handlebars.compile(emailTemplate);
       const result = template({
         AUTH_VERIFY_URL: `${verifyURL}?token=${token}`,

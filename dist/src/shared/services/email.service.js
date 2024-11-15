@@ -42,7 +42,7 @@ let EmailService = class EmailService {
                     pass: authEmailPass.toString().trim(),
                 },
             });
-            const emailTemplate = await (0, promises_1.readFile)(emailTempPath.toString().includes("http") ? emailTempPath : (path_1.default.join(__dirname, emailTempPath), "utf-8"));
+            const emailTemplate = emailTempPath.toString().includes("http") ? await (0, promises_1.readFile)(emailTempPath, "utf-8") : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
             const template = handlebars_1.default.compile(emailTemplate);
             const result = template({
                 AUTH_VERIFY_URL: `${verifyURL}?token=${token}&provider_user=${recipient}`,
@@ -85,7 +85,7 @@ let EmailService = class EmailService {
                     pass: authEmailPass.toString().trim(),
                 },
             });
-            const emailTemplate = await (0, promises_1.readFile)(emailTempPath.toString().includes("http") ? emailTempPath : (path_1.default.join(__dirname, emailTempPath), "utf-8"));
+            const emailTemplate = emailTempPath.toString().includes("http") ? await (0, promises_1.readFile)(emailTempPath, "utf-8") : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
             const template = handlebars_1.default.compile(emailTemplate);
             const result = template({
                 AUTH_VERIFY_URL: `${verifyURL}?token=${token}`,
