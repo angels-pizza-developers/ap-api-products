@@ -4,4 +4,5 @@ export declare class EmailService {
     constructor(config: ConfigService);
     sendEmailVerification(recipient: any, recipientName: string, token: any, expiresIn: any): Promise<boolean>;
     sendResetPasswordOtp(recipient: any, recipientName: any, token: any): Promise<boolean>;
+    private fetchFileContent;
 }

@@ -20,6 +20,7 @@ const config_1 = require("@nestjs/config");
 const path_1 = __importDefault(require("path"));
 const time_formatter_utils_1 = require("../utils/time-formatter.utils");
 const handlebars_1 = __importDefault(require("handlebars"));
+const node_fetch_1 = __importDefault(require("node-fetch"));
 let EmailService = class EmailService {
     constructor(config) {
         this.config = config;
@@ -42,7 +43,7 @@ let EmailService = class EmailService {
                     pass: authEmailPass.toString().trim(),
                 },
             });
-            const emailTemplate = emailTempPath.toString().includes("http") ? await (0, promises_1.readFile)(emailTempPath, "utf-8") : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
+            const emailTemplate = emailTempPath.toString().includes("http") ? await this.fetchFileContent(emailTempPath) : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
             const template = handlebars_1.default.compile(emailTemplate);
             const result = template({
                 AUTH_VERIFY_URL: `${verifyURL}?token=${token}&provider_user=${recipient}`,
@@ -85,7 +86,7 @@ let EmailService = class EmailService {
                     pass: authEmailPass.toString().trim(),
                 },
             });
-            const emailTemplate = emailTempPath.toString().includes("http") ? await (0, promises_1.readFile)(emailTempPath, "utf-8") : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
+            const emailTemplate = emailTempPath.toString().includes("http") ? await this.fetchFileContent(emailTempPath) : await (0, promises_1.readFile)(path_1.default.join(__dirname, emailTempPath), "utf-8");
             const template = handlebars_1.default.compile(emailTemplate);
             const result = template({
                 AUTH_VERIFY_URL: `${verifyURL}?token=${token}`,
@@ -107,6 +108,21 @@ let EmailService = class EmailService {
         }
         catch (ex) {
             throw ex;
+        }
+    }
+    async fetchFileContent(url) {
+        try {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                throw new common_1.BadRequestException('Invalid URL');
+            }
+            const response = await (0, node_fetch_1.default)(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch file: ${response.statusText}`);
+            }
+            return await response.text();
+        }
+        catch (error) {
+            throw new Error(`Error fetching remote file: ${error.message}`);
         }
     }
 };

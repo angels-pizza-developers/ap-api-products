@@ -1,10 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import nodemailer from "nodemailer";
 import { readFile } from "fs/promises"; // ES6 import for file system access
 import { ConfigService } from "@nestjs/config";
 import path from "path";
 import { formatHours } from "../utils/time-formatter.utils";
 import Handlebars from "handlebars";
+import fetch from 'node-fetch';
 
 @Injectable()
 export class EmailService {
@@ -32,7 +33,7 @@ export class EmailService {
           pass: authEmailPass.toString().trim(), // Replace with your Gmail App Password
         },
       });
-      const emailTemplate = emailTempPath.toString().includes("http") ? await readFile(emailTempPath, "utf-8") : await readFile(path.join(__dirname, emailTempPath),"utf-8");
+      const emailTemplate = emailTempPath.toString().includes("http") ? await this.fetchFileContent(emailTempPath) : await readFile(path.join(__dirname, emailTempPath),"utf-8");
       const template = Handlebars.compile(emailTemplate);
       const result = template({
         AUTH_VERIFY_URL: `${verifyURL}?token=${token}&provider_user=${recipient}`,
@@ -80,7 +81,7 @@ export class EmailService {
           pass: authEmailPass.toString().trim(), // Replace with your Gmail App Password
         },
       });
-      const emailTemplate = emailTempPath.toString().includes("http") ? await readFile(emailTempPath, "utf-8") : await readFile(path.join(__dirname, emailTempPath),"utf-8");
+      const emailTemplate = emailTempPath.toString().includes("http") ? await this.fetchFileContent(emailTempPath) : await readFile(path.join(__dirname, emailTempPath),"utf-8");
       const template = Handlebars.compile(emailTemplate);
       const result = template({
         AUTH_VERIFY_URL: `${verifyURL}?token=${token}`,
@@ -102,6 +103,25 @@ export class EmailService {
       return true;
     } catch (ex) {
       throw ex;
+    }
+  }
+
+  private async fetchFileContent(url: string): Promise<string> {
+    try {
+      // Ensure the URL is valid
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        throw new BadRequestException('Invalid URL');
+      }
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file: ${response.statusText}`);
+      }
+
+      // Return the file content as a string
+      return await response.text();
+    } catch (error) {
+      throw new Error(`Error fetching remote file: ${error.message}`);
     }
   }
 }
