@@ -20,7 +20,7 @@ const config_1 = require("@nestjs/config");
 const path_1 = __importDefault(require("path"));
 const time_formatter_utils_1 = require("../utils/time-formatter.utils");
 const handlebars_1 = __importDefault(require("handlebars"));
-const node_fetch_1 = __importDefault(require("node-fetch"));
+const axios_1 = __importDefault(require("axios"));
 let EmailService = class EmailService {
     constructor(config) {
         this.config = config;
@@ -115,14 +115,13 @@ let EmailService = class EmailService {
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 throw new common_1.BadRequestException('Invalid URL');
             }
-            const response = await (0, node_fetch_1.default)(url);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch file: ${response.statusText}`);
-            }
-            return await response.text();
+            const response = await axios_1.default.get(url, {
+                responseType: 'text',
+            });
+            return response.data;
         }
         catch (error) {
-            throw new Error(`Error fetching remote file: ${error.message}`);
+            throw new Error(`Error fetching remote file: ${error.response?.statusText || error.message}`);
         }
     }
 };

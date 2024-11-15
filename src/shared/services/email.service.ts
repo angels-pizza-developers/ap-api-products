@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import path from "path";
 import { formatHours } from "../utils/time-formatter.utils";
 import Handlebars from "handlebars";
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 @Injectable()
 export class EmailService {
@@ -106,22 +106,30 @@ export class EmailService {
     }
   }
 
-  private async fetchFileContent(url: string): Promise<string> {
+  /**
+   * Fetches the content of a remote file via URL.
+   * @param url - The URL of the remote file.
+   * @returns The content of the remote file as a string.
+   */
+  async fetchFileContent(url: string): Promise<string> {
     try {
-      // Ensure the URL is valid
+      // Validate the URL
       if (!url.startsWith('http://') && !url.startsWith('https://')) {
         throw new BadRequestException('Invalid URL');
       }
 
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch file: ${response.statusText}`);
-      }
+      const response = await axios.get(url, {
+        responseType: 'text', // Ensure we receive the response as plain text
+      });
 
-      // Return the file content as a string
-      return await response.text();
+      return response.data;
     } catch (error) {
-      throw new Error(`Error fetching remote file: ${error.message}`);
+      throw new Error(
+        `Error fetching remote file: ${
+          error.response?.statusText || error.message
+        }`
+      );
     }
   }
+  
 }
